@@ -1,0 +1,35 @@
+; Almacenar en la direccion 200 la cantidad de unos que tiene el dato
+; almacenado en la direccion 201
+
+
+.model small
+.stack
+.data
+.code
+
+main PROC
+mov ax,@data
+mov ds, ax
+
+xor bl, bl  ; contador de bits en 1 = 0
+mov cl, 8   ; 8 bits
+mov al, [0201h]
+
+
+contar_bits:
+shr al, 1       ; desplazar a la derecha -< LSV va a CF
+jnc siguiente   ; si CF = 0 no hay 1 -> saltar
+inc bl          ; si CF = 1 -> contar 1
+
+siguiente:
+dec cl
+jnz contar_bits
+
+mov [0200h], bl     ; guardo la cantidad de 1s
+
+mov ah, 4Ch
+int 21h
+
+main ENDP
+END main
+

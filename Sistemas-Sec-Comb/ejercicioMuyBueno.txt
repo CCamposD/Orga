@@ -1,0 +1,42 @@
+Detecte si el contenido de la dirección 79 es -85. En caso afirmativo deje
+en ese lugar el bit 4 en uno, en caso contrario el bit 4 en cero; sin
+modificar los bits restantes.Guardar el resultado en la dirección 7A
+
+
+1°  Detecte si el contenido de la dirección 79 es -85 y saltar a 3°.
+2°  Poner el bit 4 en 0 y salto incondicional a guardar y fin.
+3°  Poner el bit 4 en 1 guardar y fin.
+
+85 ---> 01010101 ----> 10101010 + 1 = 10101011 = AB = -85
+         1+4+16+64
+
+FIJAR UN BIT EN 0
+- - - 0 - - - -         
+7 6 5 4 3 2 1 0 
+1 1 1 0 1 1 1 1 ---> EF
+AND
+
+FIJAR UN BIT EN 1
+- - - 1 - - - -         
+7 6 5 4 3 2 1 0 
+0 0 0 1 0 0 0 0 ---> 10
+OR
+
+PARTE 1°
+20 	1179  Guardamos el dato de la dir. 79 en R1
+22  20AB  Guardamos en R0 -85
+24  B12C  ¿R1 es -85? Saltar si se cumple
+
+PARTE 2°  
+26	22EF  Guardamos la máscara EF para poner en 0 el bit 4
+28	8312  R1 AND R2
+2A  B030  Salto incondicional a guardar y salir
+
+PARTE 3°
+2C  2210  Guardamos la máscara 10 para poner en 1 el bit 4
+2E  7312  R1 OR R2
+30  337A  Guardamos el resultado
+32  C000  FIN 
+
+
+ 

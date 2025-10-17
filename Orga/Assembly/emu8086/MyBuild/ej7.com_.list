@@ -1,0 +1,54 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+ej7.com_ -- emu8086 assembler version: 4.08  
+ 
+[ 5/12/2025  --  5:30:29 PM ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ;Mostrar en la pantalla la suma de 10 datos.
+[   2]        :                                       
+[   3]        :                                       org 100h
+[   4]        :                                       
+[   5]        :                                       ;Inicio VRAM
+[   6]        :                                       
+[   7]    0100: B8 00 B8                              mov ax, 0b800h
+[   8]    0103: 8E D8                                 mov ds, ax
+[   9]    0105: BB 00 00                              mov bx,0000
+[  10]        :                                       
+[  11]        :                                       ;Desarrollo del ejercicio
+[  12]        :                                       
+[  13]    0108: B9 0A 00                              mov cx, 0Ah ; Iterar 10 datos
+[  14]    010B: BE 01 00                              mov si, 1   ; contador de datos
+[  15]        :                                       
+[  16]    010E:                                       sumar:
+[  17]    010E: 03 C6                                 add ax,si
+[  18]    0110: 46                                    inc si
+[  19]    0111: E2 FB                                 loop sumar ; repito 10 veces
+[  20]        :                                       
+[  21]        :                                       
+[  22]        :                                       ; AX tiene 55, pero no pude imprimir directamente el 55
+[  23]        :                                       ; 0011 0111
+[  24]        :                                       ; 32 16 4 2 1 = 48 + 2 + 5 = 55 => 5 = 35h ASCII
+[  25]        :                                       
+[  26]    0113: B9 02 00                              mov cx, 02
+[  27]    0116: B4 0F                                 mov ah, 0Fh ; fondo_color = negro_blanco
+[  28]    0118: B0 35                                 mov al, 35h ; 5 en ASCII
+[  29]        :                                       
+[  30]    011A:                                       resultado:
+[  31]    011A: 89 07                                 mov [bx],ax
+[  32]    011C: 83 C3 02                              add bx,2
+[  33]    011F: E2 F9                                 loop resultado
+[  34]        :                                       
+[  35]    0121: C3                                    ret
+[  36]        :                                       
+ 
+===================================================================================================
+ 
+
+
+
+
+===================================================================================================

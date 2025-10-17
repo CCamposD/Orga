@@ -1,0 +1,124 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+ej8.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 5/13/2025  --  9:06:14 PM ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ;Mostrar en la pantalla la suma de 10 datos
+[   2]        :                                       
+[   3]        :                                       .MODEL SMALL
+[   4]        :                                       .STACK ;asigna un STACK de 1K
+[   5]        :                                       
+[   6]        :                                       .DATA
+[   7]    0100: 00                                    cen db 0        ; variable para las centenas
+[   8]    0101: 00                                    dece db 0       ; variable para las decenas
+[   9]    0102: 00                                    uni db 0        ; variable para las unidades
+[  10]        :                                       
+[  11]    0103: 0F 0E 0D 0F 0B                        DATOSSUM DB 0Fh, 0Eh, 0Dh, 0Fh, 0Bh ; datos que vamos
+[  12]    0108: 06 0F 0F 0E 0A                        DB 06h, 0Fh, 0Fh, 0Eh, 0Ah ; a procesar
+[  13]        :                                       
+[  14]        :                                       .CODE
+[  15]    0110:                                       SUMA PROC
+[  16]    0110: B8 10 00                              mov ax, @DATA
+[  17]    0113: 8E D8                                 mov ds, ax
+[  18]    0115: 33 DB                                 xor bx, bx        ; indice de acceso al área de datos
+[  19]    0117: 32 D2                                 xor dl, dl        ; acumulador de datos
+[  20]    0119: B9 0A 00                              mov cx, 0Ah       ; numero de datos a procesar
+[  21]        :                                       
+[  22]        :                                       
+[  23]        :                                       ;CALCULO DE LA SUMA
+[  24]        :                                       
+[  25]    011C:                                       ACUMULA:
+[  26]        :                                       
+[  27]    011C: 02 57 03                              add dl, DATOSSUM [BX]
+[  28]    011F: 43                                    inc bx
+[  29]    0120: E2 FA                                 loop ACUMULA
+[  30]        :                                       
+[  31]        :                                       ;SEPARACIÓN DEL RESULTADO EN UNIDAD, DECENA Y CENTENA
+[  32]        :                                       
+[  33]    0122: 8A C2                                 mov al,dl   ;paso el resultado a AL (ejemplo 423)
+[  34]    0124: D4 0A                                 aam         ;AL/10 coceinete en AH (42) y resto en AL (las unidades 3)
+[  35]        :                                       
+[  36]    0126: A2 02 00                              mov uni,al  ;guardo las unidades en uni
+[  37]    0129: 8A C4                                 mov al,ah   ;muevo lo que tengo en AH (42) a AL para poder volver a separar los números
+[  38]        :                                       
+[  39]    012B: D4 0A                                 aam         ; AL/10 cociente en AH (el 4) y el resto en AL= 2
+[  40]    012D: 88 26 00 00                           mov cen,ah  ;guardo las centenas en cen en este caso 4
+[  41]        :                                       
+[  42]    0131: A2 01 00                              mov dece,al ;guardo las decenas en dec, en este caso 2
+[  43]        :                                       
+[  44]        :                                       
+[  45]        :                                       ;IMPRESIÓN DE LOS TRES VALORESEMPEZANDO POR CENTENAS, DECENAS Y UNIDADES
+[  46]        :                                       
+[  47]    0134: B4 02                                 mov ah,02h
+[  48]        :                                       
+[  49]    0136: 8A 16 00 00                           mov dl,cen  ;imprimo centenas
+[  50]    013A: 80 C2 30                              add dl,30h  ;se suma 30h a dl porque el ASCII de un número es el número + 30
+[  51]    013D: CD 21                                 int 21h
+[  52]        :                                       
+[  53]    013F: 8A 16 01 00                           mov dl,dece ;imprimo decenas
+[  54]    0143: 80 C2 30                              add dl,30h
+[  55]    0146: CD 21                                 int 21h
+[  56]        :                                       
+[  57]    0148: 8A 16 02 00                           mov dl,uni
+[  58]    014C: 80 C2 30                              add dl,30h
+[  59]    014F: CD 21                                 int 21h
+[  60]        :                                       
+[  61]        :                                       ;TERMINA EL PROGRAMA
+[  62]        :                                       
+[  63]    0151: B4 4C                                 mov ah,04Ch
+[  64]    0153: CD 21                                 int 21h
+[  65]        :                                       end
+[  66]        :                                       
+[  67]        :                                       SUMA ENDP
+[  68]        :                                       END
+[  69]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 55      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 02      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 00      -   SP - stack pointer (l.byte)
+0011: 01      -   SP - stack pointer (h.byte)
+0012: 1C      -   check sum (l.byte)
+0013: 59      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 11      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 11      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

@@ -1,0 +1,62 @@
+;21.
+;Una cadena de caracteres ASCII de longitud dada por el dato almacenado
+;en la direccion 201 se inicia en la direccion 202.
+;Almacenar FF en la direccion 200 si la paridad de todos los caracteres es par.
+;En caso contrario almacenar 00.
+
+
+
+.model small
+.stack
+.data
+.code
+
+main PROC
+mov ax,@data
+mov ds, ax
+
+mov cl, [0201h] ; cantidad de datos
+mov si, 0202h   ; direc de los datos
+
+verificar:
+mov al, [si]    ; cargo el char actual
+mov ah, al      ; copio para contar bits
+
+xor bl, bl      ; contador de 1s
+mov ch, 8       ; 8 bits por char
+
+contar_bits:
+shr ah, 1       ; desplazar bit a CF
+jnc siguiente_bit
+inc bl          ; si CF = 1, sumar 1
+
+siguiente_bit:
+dec ch
+jnz contar_bits
+
+test bl, 1      ; es impar?
+jnz paridad_impar
+
+inc si          ; siguiente caracter
+dec cl
+jnz verificar
+
+paridad_par:
+mov byte ptr [0200h], 0FFh
+jmp fin
+
+paridad_impar:
+mov byte ptr [0200h], 00h
+
+fin:
+
+mov ah, 4Ch
+int 21h
+
+
+main ENDP
+END main
+
+
+
+; [SOURCE]: K:\Facultad\Orga\Assembly\guia-emu\Ejercicios-6-23\ej21.asm

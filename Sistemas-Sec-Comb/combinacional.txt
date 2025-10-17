@@ -1,0 +1,24 @@
+El montacarga M gira (sube) si el botón verde V está pulsado, el sensor S indica que el montacargas está abajo y la puerta P está cerrada o si el botón verde V está pulsado, el sensor S indica que el montacargas está arriba y la puerta P está cerrada (baja).
+ a) hacer la tabla de verdad S V P | G  
+ b) Escribir la expresión de G en función de S, V y P 
+ c) Graficar el circuito con compuertas
+
+
+Simplificado:
+
+Tabla de verdad
+V P G
+0 0 0   
+0 1 0
+1 0 0
+1 1 1  Función G = P AND V
+
+Desarrollar:
+
+V P S G0 G1
+V = 1 botón verde pulsado
+P = 1 puerta cerrada
+S = 1 Montacargas abajo
+G0 Salida de giro en un sentido
+G1 salida de giro en otro sentido
+

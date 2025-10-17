@@ -1,0 +1,53 @@
+; 22.
+; Dos cadenas de caracteres, A y B, de longitudes iguales e igual al dato
+; almacenado en la direccion 201 comienza en las direcciones 202 y 234
+; respectivamente.
+; Si la cadena A es mayor o igual a la cadena B según el
+; orden alfabético, almacenar 0 en la dirección 200.
+; En caso contrario almacenar 1.
+
+.model small
+.stack
+.data
+.code
+
+main PROC
+mov ax,@data
+mov ds, ax
+
+mov cl, [0201h]   ; longitud de las cadenas
+mov si, 0202h     ; inicio de cadena A
+mov di, 0234h     ; inicio de cadena B
+
+comparar:
+mov al, [si]
+mov ah, [di]
+cmp al, ah
+jb a_es_menor      ; si A < B
+ja a_mayor_igual   ; si A > B
+
+; caracteres iguales ? avanzar
+inc si
+inc di
+dec cl
+jnz comparar       ; mientras queden caracteres
+
+; si todas fueron iguales ? A = B
+a_mayor_igual:
+mov byte ptr [0200h], 00h
+jmp fin
+
+a_es_menor:
+mov byte ptr [0200h], 01h
+
+fin:
+mov ah, 4Ch
+int 21h
+
+
+main ENDP
+END main
+
+
+
+; [SOURCE]: K:\Facultad\Orga\Assembly\guia-emu\Ejercicios-6-23\ej22.asm

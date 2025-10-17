@@ -1,0 +1,41 @@
+;El caracter ASCII de control de retorno de carro CR es, en decimal, el 13.
+;Este caracter se encuentra al final de una cadena que comienza en la direccion 202.
+;Ubicar en las posiciones de memoria 200 y 201 la direccion del
+;ultimo caracter antes del CR.
+
+
+.model small
+.stack
+.data
+.code
+
+main PROC
+mov ax,@data
+mov ds, ax
+
+mov si, 0202h   ; inicio de la cadena
+mov di, si      ; ultima pos antes del caractrer CR
+
+buscar_cr:
+mov al, [si]    ; veo el caracter
+cmp al, 0Dh     ; es CR ?
+je guardar_direccion
+mov di, si      ; actualizo la ultima pos antes del CR
+inc si
+jmp buscar_cr
+
+guardar_direccion:
+mov ax, di
+mov [0200h], al
+mov [0201h], ah
+
+mov ah, 4Ch
+int 21h
+
+
+main ENDP
+END main
+
+
+
+; [SOURCE]: K:\Facultad\Orga\Assembly\guia-emu\Ejercicios-6-23\ej20.asm

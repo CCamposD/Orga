@@ -1,0 +1,39 @@
+11. A partir de la dirección 0200 hay un número de 3 bytes de longitud. Luego de ese número, en la dirección siguiente de la memoria, hay otro número de 24 bits. Sumar los dos números y guardar el resultado a partir de la dirección posterior al segundo número.
+
+ 321
++146
+ 467
+
+ 21
++46
+ 67
+
+ 3
++1
+ 4
+Guardan 7, 6 y 4
+
+
+A=23A2C6
+B=1B278D
+
+AX <-- M[200]  AX=A2C6
+BX <-- M[203]  BX=278D
+CL = 0 (carry)
+AX <-- AX + BX AX = A2C6+278D = CA53
+si hay carry CL=1 (carry)
+BL <-- M[202]  BL = 23
+BH <-- M[205]  BH = 1B
+BL <-- BL + BH  = 3E
+BL = BL + CL (carry)
+
+
+0200 C6  
+0201 A2
+0202 23
+0203 8D
+0204 27
+0205 1B
+[0206] <--AL  53
+[0207] <--AH  CA
+[0208] <--BL  3E

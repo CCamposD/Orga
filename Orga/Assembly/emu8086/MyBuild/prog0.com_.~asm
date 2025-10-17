@@ -1,0 +1,106 @@
+;Escribir "Organizacion del Computador" sin acentos en la memoria
+;de video con letra roja sobre fondo amarillo
+
+org 100h
+
+mov ax,0B800h
+mov ds,ax
+mov bx,0000
+
+mov ah, 0E4h ; fondo_texto (amarillo_rojo)
+
+; "Organizacion"
+mov al, 'O'
+mov [bx], ax
+add bx, 2
+
+mov al, 'r'
+mov [bx], ax
+add bx, 2
+
+mov al, 'g'
+mov [bx], ax
+add bx, 2
+
+mov al, 'n'
+mov [bx], ax
+add bx, 2
+
+mov al, 'z'
+mov [bx], ax
+add bx, 2
+
+mov al, 'a'
+mov [bx], ax
+add bx, 2
+
+mov al, 'c'
+mov [bx], ax
+add bx, 2
+
+mov al, 'i'
+mov [bx], ax
+add bx, 2
+
+mov al, 'o'
+mov [bx], ax
+add bx, 2
+
+mov al, 'n'
+mov [bx], ax
+add bx, 2
+
+; "space"
+
+mov al, ' '
+mov [bx], ax
+add bx, 2
+
+;   "Computador"
+
+mov al, 'C'
+mov [bx], ax
+add bx, 2
+
+mov al, 'o'
+mov [bx], ax
+add bx, 2
+
+mov al, 'm'
+mov [bx], ax
+add bx, 2
+
+mov al, 'p'
+mov [bx], ax
+add bx, 2
+
+mov al, 'u'
+mov [bx], ax
+add bx, 2
+
+mov al, 't'
+mov [bx], ax
+add bx, 2
+
+mov al, 'a'
+mov [bx], ax
+add bx, 2
+
+mov al, 'd'
+mov [bx], ax
+add bx, 2
+
+mov al, 'o'
+mov [bx], ax
+add bx, 2
+
+mov al, 'r'
+mov [bx], ax
+add bx, 2
+
+
+ret
+
+
+
+; [SOURCE]: K:\Facultad\Orga\Assembly\GUIA\emu8086\prog0.asm

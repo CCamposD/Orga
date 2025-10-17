@@ -1,0 +1,41 @@
+;En las direcciones 0100 y 0101 hay dos enteros positivos.
+;Ubicar en la direccion 0102 el menor de los dos.
+
+.MODEL SMALL
+.STACK
+.DATA
+
+valores DB 12h, 34h
+
+.CODE
+
+MAIN PROC
+mov ax, @data
+mov ds, ax
+
+; Cargo los valores de las direcciones
+mov al, [0100]
+mov bl, [0101]
+
+
+; Comparo
+cmp al, bl
+jb menor_al ; si al < bl, salto a AL
+
+
+; Si no salta sigo
+mov [0102], bl
+jmp fin     ; salto incodicional
+
+menor_al:
+mov [0102], al
+
+fin:
+mov ah, 4Ch
+int 21h
+MAIN ENDP
+END MAIN
+
+
+
+; [SOURCE]: K:\Facultad\Orga\Assembly\GUIA\Ejercicios-6-\ej10.asm

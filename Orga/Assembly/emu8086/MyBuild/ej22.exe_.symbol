@@ -1,0 +1,16 @@
+< THE SYMBOL TABLE >  ej22.exe_  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+STACK                    	00000     	-5        	SEGMENT   	(ITSELF)  
+DATA                     	00010     	-5        	SEGMENT   	(ITSELF)  
+CODE                     	00010     	-5        	SEGMENT   	(ITSELF)  
+MAIN                     	00000     	-1        	NEAR      	code      
+COMPARAR                 	0000F     	-1        	LABEL     	code      
+A_MAYOR_IGUAL            	0001F     	-1        	LABEL     	code      
+A_ES_MENOR               	00026     	-1        	LABEL     	code      
+FIN                      	0002B     	-1        	LABEL     	code      
+===================================================================================================
+[ 6/8/2025  --  10:39:59 PM ] 
+< END >
+ 

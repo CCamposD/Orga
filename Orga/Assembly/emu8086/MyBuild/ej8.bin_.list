@@ -1,0 +1,84 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+ej8.bin_ -- emu8086 assembler version: 4.08  
+ 
+[ 5/13/2025  --  9:04:13 PM ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ;Mostrar en la pantalla la suma de 10 datos
+[   2]        :                                       
+[   3]        :                                       .DATA
+[   4]    0000: 00                                    cen db 0        ; variable para las centenas
+[   5]    0001: 00                                    dece db 0       ; variable para las decenas
+[   6]    0002: 00                                    uni db 0        ; variable para las unidades
+[   7]        :                                       
+[   8]    0003: 0F 0E 0D 0F 0B                        DATOSSUM DB 0Fh, 0Eh, 0Dh, 0Fh, 0Bh ; datos que vamos
+[   9]    0008: 06 0F 0F 0E 0A                        DB 06h, 0Fh, 0Fh, 0Eh, 0Ah ; a procesar
+[  10]        :                                       
+[  11]        :                                       .CODE
+[  12]        :                                       
+[  13]    0010: B8 00 00                              mov ax, @DATA
+[  14]    0013: 8E D8                                 mov ds, ax
+[  15]    0015: 33 DB                                 xor bx, bx        ; indice de acceso al área de datos
+[  16]    0017: 32 D2                                 xor dl, dl        ; acumulador de datos
+[  17]    0019: B9 0A 00                              mov cx, 0Ah       ; numero de datos a procesar
+[  18]        :                                       
+[  19]        :                                       
+[  20]        :                                       ;CALCULO DE LA SUMA
+[  21]        :                                       
+[  22]    001C:                                       ACUMULA:
+[  23]        :                                       
+[  24]    001C: 02 57 03                              add dl, DATOSSUM [BX]
+[  25]    001F: 43                                    inc bx
+[  26]    0020: E2 FA                                 loop ACUMULA
+[  27]        :                                       
+[  28]        :                                       ;SEPARACIÓN DEL RESULTADO EN UNIDAD, DECENA Y CENTENA
+[  29]        :                                       
+[  30]    0022: 8A C2                                 mov al,dl   ;paso el resultado a AL (ejemplo 423)
+[  31]    0024: D4 0A                                 aam         ;AL/10 coceinete en AH (42) y resto en AL (las unidades 3)
+[  32]        :                                       
+[  33]    0026: A2 02 00                              mov uni,al  ;guardo las unidades en uni
+[  34]    0029: 8A C4                                 mov al,ah   ;muevo lo que tengo en AH (42) a AL para poder volver a separar los números
+[  35]        :                                       
+[  36]    002B: D4 0A                                 aam         ; AL/10 cociente en AH (el 4) y el resto en AL= 2
+[  37]    002D: 88 26 00 00                           mov cen,ah  ;guardo las centenas en cen en este caso 4
+[  38]        :                                       
+[  39]    0031: A2 01 00                              mov dece,al ;guardo las decenas en dec, en este caso 2
+[  40]        :                                       
+[  41]        :                                       
+[  42]        :                                       ;IMPRESIÓN DE LOS TRES VALORESEMPEZANDO POR CENTENAS, DECENAS Y UNIDADES
+[  43]        :                                       
+[  44]    0034: B4 02                                 mov ah,02h
+[  45]        :                                       
+[  46]    0036: 8A 16 00 00                           mov dl,cen  ;imprimo centenas
+[  47]    003A: 80 C2 30                              add dl,30h  ;se suma 30h a dl porque el ASCII de un número es el número + 30
+[  48]    003D: CD 21                                 int 21h
+[  49]        :                                       
+[  50]    003F: 8A 16 01 00                           mov dl,dece ;imprimo decenas
+[  51]    0043: 80 C2 30                              add dl,30h
+[  52]    0046: CD 21                                 int 21h
+[  53]        :                                       
+[  54]    0048: 8A 16 02 00                           mov dl,uni
+[  55]    004C: 80 C2 30                              add dl,30h
+[  56]    004F: CD 21                                 int 21h
+[  57]        :                                       
+[  58]        :                                       ;TERMINA EL PROGRAMA
+[  59]        :                                       
+[  60]    0051: B4 4C                                 mov ah,04Ch
+[  61]    0053: CD 21                                 int 21h
+[  62]        :                                       end
+[  63]        :                                       
+[  64]        :                                       SUMA ENDP
+[  65]        :                                       END
+[  66]        :                                       
+ 
+===================================================================================================
+ 
+
+
+
+
+===================================================================================================
